@@ -32,7 +32,7 @@
     <h1>ML Based Repetition Counting</h1>
 
     <!-- Video element to display the camera feed -->
-    <img id="video" src="{{ url_for('video_feed') }}" width="640" height="480">
+    <video id="video" width="640" height="480" autoplay></video>
 
     <!-- Display stage, reps, and probability -->
     <div class="stats">
@@ -45,6 +45,16 @@
     <button id="resetButton">Reset</button>
 
     <script>
+        // Access the user's camera and display the feed
+        const video = document.getElementById('video');
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(stream => {
+                video.srcObject = stream;
+            })
+            .catch(error => {
+                console.error('Error accessing the camera:', error);
+            });
+
         // Function to update the UI with new data
         function updateUI(data) {
             document.getElementById('stage').textContent = data.stage;
